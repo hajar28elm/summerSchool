@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Entity
@@ -17,9 +18,16 @@ public class Session {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String title;
-    private String Abstract;
-    private List<String> requirements;
+    private String insight;
 
+    private String requirements;
+    public List<String> getRequirementsList() {
+        return Arrays.asList(requirements.split(","));
+    }
+
+    public void setRequirementsList(List<String> requirementsList) {
+        this.requirements = String.join(",", requirementsList);
+    }
     @ManyToOne
     private Organizer organizer;
 }
