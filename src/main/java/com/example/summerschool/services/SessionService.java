@@ -3,6 +3,7 @@ package com.example.summerschool.services;
 import com.example.summerschool.dto.SaveSessionDto;
 import com.example.summerschool.models.Organizer;
 import com.example.summerschool.models.Session;
+import com.example.summerschool.repositories.OrganizerRepository;
 import com.example.summerschool.repositories.SessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,10 +18,7 @@ public class SessionService {
     @Autowired
     private OrganizerRepository organizerRepository;
 
-    public SessionService(SessionRepository sessionRepository , OrganizerRepository organizerRepository){
-        this.organizerRepository = organizerRepository;
-        this.sessionRepository = sessionRepository;
-    }
+
 
     public Integer save(SaveSessionDto saveSessionDto) {
         Organizer org = organizerRepository.findById(saveSessionDto.getOrganizerID()).orElse(null);
@@ -34,7 +32,11 @@ public class SessionService {
     }
 
     public Session findById(Integer id) {
-        Session session = sessionRepository.findById(id).orElse(null);
+        System.out.println("2");
+
+        Session session = sessionRepository.findById(id).orElseThrow(()->new RuntimeException("not found "));
+        System.out.println("3");
+
         return session;
     }
 
@@ -43,9 +45,9 @@ public class SessionService {
     }
 
     public void update(Integer id, SaveSessionDto updatedSessionDto) {
-        Session sessionToUpdate = sessionRepository.findById(id).orElse(null);
+        Session sessionToUpdate = sessionRepository.findById(id).orElseThrow(()->new RuntimeException("not found "));
         if (sessionToUpdate != null) {
-            Organizer org = organizerRepository.findById(updatedSessionDto.getOrganizerID()).orElse(null);
+            Organizer org = organizerRepository.findById(updatedSessionDto.getOrganizerID()).orElseThrow(()->new RuntimeException("not found "));
             sessionToUpdate.setTitle(updatedSessionDto.getTitle());
             sessionToUpdate.setInsight(updatedSessionDto.getInsight());
             sessionToUpdate.setRequirements(updatedSessionDto.getRequirements());

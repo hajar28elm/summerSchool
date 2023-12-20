@@ -1,5 +1,6 @@
 package com.example.summerschool.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,6 +29,8 @@ public class Session {
     public void setRequirementsList(List<String> requirementsList) {
         this.requirements = String.join(",", requirementsList);
     }
+    @JsonIgnore
     @ManyToOne
+    @JoinColumn(name = "organizer_id")
     private Organizer organizer;
 }

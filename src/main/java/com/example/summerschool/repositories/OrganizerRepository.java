@@ -1,4 +1,4 @@
-package com.example.summerschool.services;
+package com.example.summerschool.repositories;
 
 import com.example.summerschool.models.Organizer;
 import org.springframework.data.jpa.repository.JpaRepository;

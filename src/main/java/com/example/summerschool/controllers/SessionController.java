@@ -27,6 +27,7 @@ public class SessionController {
 
     @GetMapping("/{id}")
     public Session getSessionById(@PathVariable Integer id) {
+        System.out.println("1");
         return sessionService.findById(id);
     }
 
